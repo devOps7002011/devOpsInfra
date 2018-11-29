@@ -7,7 +7,7 @@ jobs:
     - get: devOpsInfra
   - task: mvn_build
     file: devOpsInfra/concourse/java/task.yml
-    input_mapping: {source: monitoring-app}
+    input_mapping: {source: devOpsApp}
 
   - task: push_to_heroku
     file: devOpsInfra/concourse/heroku/push_master_to_heroku.yml
