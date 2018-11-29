@@ -1,0 +1,55 @@
+jobs:
+# Replace params / app_name with your heroku app name
+- name: devOpsApp
+  plan:
+  - aggregate:
+    - get: devOpsApp
+    - get: devOpsInfra
+  - task: mvn_build
+    file: devOpsInfra/concourse/java/task.yml
+    input_mapping: {source: monitoring-app}
+
+  - task: push_to_heroku
+    file: devOpsInfra/concourse/heroku/push_master_to_heroku.yml
+    input_mapping: {source: devOpsApp}
+    params:
+      app_name: ((heroku_app_name))
+      heroku_email: ((heroku_email))
+      heroku_api_token: ((heroku_api_key))
+
+
+- name: devOpsInfra
+  plan:
+  - aggregate:
+    - get: devOpsInfra
+  - task: apply
+    file: devOpsInfra/concourse/terraform/task.yml
+    input_mapping: {source: devOpsInfra}
+    params:
+      github_token: ((github_token))
+      heroku_api_key: ((heroku_api_key))
+      statuscake_api_key: ((statuscake_api_key))
+      command: apply
+      directories: |
+        terraform
+  - put: devOpsInfra
+    params:
+      repository: with-state
+      rebase: true
+
+resources:
+# Replace with your own repository
+- name: devOpsApp
+  type: git
+  source:
+    uri: git@github.com:devOps7002011/devOpsApp.git
+    branch: master
+    private_key: ((deploy_key_app))
+
+# Replace with your own repository
+- name: devOpsInfra
+  type: git
+  source:
+    uri: git@github.com:devOps7002011/devOpsInfra.git
+    branch: master
+    private_key: ((deploy_key_infra))
