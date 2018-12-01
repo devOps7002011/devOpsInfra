@@ -1,6 +1,6 @@
 jobs:
 # Replace params / app_name with your heroku app name
-- name: devOpsApp
+- name: deploy-app
   plan:
   - aggregate:
     - get: devOpsApp
@@ -18,7 +18,7 @@ jobs:
       heroku_api_token: ((heroku_api_key))
 
 
-- name: devOpsInfra
+- name: infra
   plan:
   - aggregate:
     - get: devOpsInfra
