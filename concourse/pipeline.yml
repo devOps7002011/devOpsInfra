@@ -42,7 +42,7 @@ resources:
 - name: devOpsApp
   type: git
   source:
-    uri: git@github.com:devOps7002011/devOpsApp.git
+    uri: https://github.com/devOps7002011/devOpsApp.git
     branch: master
     private_key: ((deploy_key_app))
 
@@ -50,6 +50,6 @@ resources:
 - name: devOpsInfra
   type: git
   source:
-    uri: git@github.com:devOps7002011/devOpsInfra.git
+    uri: https://github.com/devOps7002011/devOpsInfra.git
     branch: master
     private_key: ((deploy_key_infra))
