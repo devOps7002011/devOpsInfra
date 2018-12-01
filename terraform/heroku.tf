@@ -33,7 +33,7 @@ resource "heroku_addon" "db_prod" {
 }
 
 resource "heroku_pipeline" "test-app" {
-  name = "${var.pipeline_name}"
+  name = "test-app"
 }
 
 # Couple apps to different pipeline stages
