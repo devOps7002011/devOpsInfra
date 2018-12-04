@@ -46,8 +46,6 @@ resources:
   source:
     uri: git@github.com:devOps7002011/devOpsApp.git
     branch: master
-    username: ((githubusername))
-    password: ((githubpassword))
     private_key: ((deploy_key_app))
 
 # Replace with your own repository
@@ -56,8 +54,6 @@ resources:
   source:
     uri: git@github.com:devOps7002011/devOpsInfra.git
     branch: master
-    username: ((githubusername))
-    password: ((githubpassword))
     private_key: ((deploy_key_infra))
 
 
