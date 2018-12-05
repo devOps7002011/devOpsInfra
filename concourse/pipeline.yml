@@ -7,7 +7,6 @@ jobs:
     - get: devOpsApp
       trigger: true
     - get: devOpsInfra
-
   - task: mvn_build
     file: devOpsInfra/concourse/java/task.yml
     input_mapping: {source: devOpsApp}

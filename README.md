@@ -25,7 +25,11 @@ Prosject er basert på at du har Docker
  
  5. I root infra-prosjekt, kjør:
  
- fly -t ≤target> sp -p pipeline_name -c concourse/pipeline.yml -l credentials.yaml
+ fly -t ≤target> sp -p pipeline_name -c concourse/pipeline.yml -l credentials.yml
+ 
+ fly -t tutorial unpause-pipeline -p pipeline_name
+ 
+ 
  
  
     
