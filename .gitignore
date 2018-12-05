@@ -5,6 +5,7 @@ credentials.yaml
 credentials_example.yml
 credentials.yml
 .terraform
+
 terraform.tfstate
 
 devOpsInfra.iml
