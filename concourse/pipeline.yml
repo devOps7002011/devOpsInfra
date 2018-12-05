@@ -16,15 +16,20 @@ jobs:
     params:
       build: jar-file
 
-
-- name: deploy-app
+- name: deploy-ci
   plan:
   - aggregate:
-    - get: devOpsApp
     - get: devOpsInfra
-  - task: mvn_build
-    file: devOpsInfra/concourse/java/task.yml
-    input_mapping: {source: devOpsApp}
+    - get: docker-image-app
+      trigger: true
+      passed: [build]
+
+  - task: heroku_task
+    file: devOpsInfra/concourse/heroku/heroku_task.yml
+    params:
+      heroku_email: ((heroku_email))
+      heroku_api_token: ((heroku_api_key))
+      app_name: ((heroku_app_name))
 
   - task: push_to_heroku
     file: devOpsInfra/concourse/heroku/push_master_to_heroku.yml
@@ -34,24 +39,11 @@ jobs:
       heroku_email: ((heroku_email))
       heroku_api_token: ((heroku_api_key))
 
-- name: deploy-ci
-  plan:
-  - aggregate:
-    - get: devOpsInfra
-    - get: docker-image-app
-      trigger: true
-      passed: [build]
-  - task: herokutask
-     file: devOpsInfra/concourse/heroku/heroku_task.yml
-     params:
-       heroku_email: ((heroku_email))
-       heroku_api_token: ((heroku_api_key))
-       app_name: ((heroku_app_name))
-
 - name: infra
   plan:
   - aggregate:
     - get: devOpsInfra
+
   - task: apply
     file: devOpsInfra/concourse/terraform/task.yml
     input_mapping: {source: devOpsInfra}
@@ -88,10 +80,9 @@ resources:
     private_key: ((deploy_key_infra))
 
 # Heroku registry
-resource:
 - name: docker-image-app
   type: docker-image
   source:
-    repository: registry.heroku.com/((heroku_app_name))/web
+    repository: registry.heroku.com/test-app/web
     username: ((heroku_email))
     password: ((heroku_api_key))
