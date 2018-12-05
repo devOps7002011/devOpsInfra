@@ -36,14 +36,6 @@ jobs:
     params:
       build: jar-file
 
-- name: deploy-ci
-  plan:
-  - aggregate:
-    - get: devOpsInfra
-    - get: docker-image-app
-      trigger: true
-      passed: [build]
-
 - name: infra
   plan:
   - aggregate:
@@ -88,6 +80,6 @@ resource:
 - name: docker-image-app
   type: docker-image
   source:
-    repository: registry.heroku.com/((heroku_app_name))/web
+    repository: registry.heroku.com/registry.heroku.com/dev-pgr301-app-ci/web
     username: ((heroku_email))
     password: ((heroku_api_key))
