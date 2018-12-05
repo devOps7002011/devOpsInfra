@@ -80,6 +80,6 @@ resource:
 - name: docker-image-app
   type: docker-image
   source:
-    repository: registry.heroku.com/registry.heroku.com/dev-pgr301-app-ci/web
+    repository: registry.heroku.com/dev-pgr301-app-ci/web
     username: ((heroku_email))
     password: ((heroku_api_key))
