@@ -1,5 +1,22 @@
 jobs:
 # Replace params / app_name with your heroku app name
+
+- name: build
+  plan:
+  - aggregate:
+    - get: devOpsApp
+      trigger: true
+    - get: devOpsInfra
+
+  - task: mvn_build
+    file: devOpsInfra/concourse/java/task.yml
+    input_mapping: {source: devOpsApp}
+
+  - put: docker-image-app
+    params:
+      build: jar-file
+
+
 - name: deploy-app
   plan:
   - aggregate:
@@ -17,20 +34,6 @@ jobs:
       heroku_email: ((heroku_email))
       heroku_api_token: ((heroku_api_key))
 
-- name: build
-  plan:
-  - aggregate:
-    - get: devOpsApp
-      trigger: true
-    - get: devOpsInfra
-   - task: mvn_build
-     file: devOpsInfra/concourse/java/task.yml
-     input_mapping: {source: devOpsApp}
-
-  - put: docker-image-app
-    params:
-      build: jar-file
-
 - name: deploy-ci
   plan:
   - aggregate:
@@ -38,8 +41,8 @@ jobs:
     - get: docker-image-app
       trigger: true
       passed: [build]
-   - task: herokutask
-     file: devOpsInfra/concourse/heroku/herokutask.yml
+  - task: herokutask
+     file: devOpsInfra/concourse/heroku/heroku_task.yml
      params:
        heroku_email: ((heroku_email))
        heroku_api_token: ((heroku_api_key))
