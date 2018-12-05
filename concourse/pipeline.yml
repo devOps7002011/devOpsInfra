@@ -8,9 +8,6 @@ jobs:
   - task: mvn_build
     file: devOpsInfra/concourse/java/task.yml
     input_mapping: {source: devOpsApp}
- - put: docker-image-app
-        params:
-          build: jar-file
 
   - task: push_to_heroku
     file: devOpsInfra/concourse/heroku/push_master_to_heroku.yml
@@ -20,8 +17,18 @@ jobs:
       heroku_email: ((heroku_email))
       heroku_api_token: ((heroku_api_key))
 
+- name: build
+  plan:
+  - aggregate:
+    - get: devOpsInfra
+  - task: mvn_build
+    file: devOpsInfra/concourse/java/task.yml
+    input_mapping: {source: docker-image-app}
+  - put: docker-image-app
+    params:
+      build: jar-file
 
-name: deploy-ci
+- name: deploy-ci
   plan:
   - aggregate:
     - get: devOpsInfra
