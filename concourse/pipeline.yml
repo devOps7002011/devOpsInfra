@@ -17,6 +17,16 @@ jobs:
       heroku_email: ((heroku_email))
       heroku_api_token: ((heroku_api_key))
 
+- name: build
+  plan:
+  - aggregate:
+    - get: devOpsApp
+      trigger: true
+    - get: devOpsInfra
+  - put: docker-image-app
+    params:
+      build: jar-file
+
 - name: deploy-ci
   plan:
   - aggregate:
@@ -24,17 +34,6 @@ jobs:
     - get: docker-image-app
       trigger: true
       passed: [build]
-
-- name: build
-  plan:
-  - aggregate:
-    - get: devOpsInfra
-  - task: mvn_build
-    file: devOpsInfra/concourse/java/task.yml
-    input_mapping: {source: docker-image-app}
-  - put: docker-image-app
-    params:
-      build: jar-file
 
 - name: infra
   plan:
@@ -75,11 +74,11 @@ resources:
     branch: master
     private_key: ((deploy_key_infra))
 
-
+# Heroku registry
 resource:
 - name: docker-image-app
   type: docker-image
   source:
-    repository: registry.heroku.com/dev-pgr301-app-ci/web
+    repository: registry.heroku.com/((heroku_app_name))/web
     username: ((heroku_email))
     password: ((heroku_api_key))
