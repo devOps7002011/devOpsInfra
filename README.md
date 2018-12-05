@@ -1,6 +1,5 @@
 # PGR301 - EKSAMENSOPPGAVE - DEVOPS
 
-
 ## GITHUB-REPO
  Infra:
  https://github.com/devOps7002011/devOpsInfra
@@ -29,7 +28,28 @@ Prosject er basert på at du har Docker
  
  fly -t tutorial unpause-pipeline -p pipeline_name
  
+ 6. Open: localhost:8080 - kjør infra jobb
  
+ 
+## Oppgaver
+
+### Basis Pipeline
+- Hadde problemer med "permission denied" i concourse pipeline fra både task.sh og
+terraform.sh, det løses ved å kjøre følgende kommandoer i tilhørende mappe:
+sudo git update-index --chmod=+x task.sh
+sudo git update-index --chmod=+x terraform.sh
+
+###  Docker 
+Dockerfil bygger container Image av applikasjonen
+- Problem i forhold til mappestruktur i applikasjons-repo hvor dockerfile til applikasjon,
+ikke ligger i rotmappe, jeg prøvde å søke meg opp på mulige måter å løse dette på,
+enten ved å bygge en task-job i concourse som kjørte docker-compose.yml (ligger i prosjekt-mappe)som igjen bygger dockerfilen 
+tilhørende applikasjonen, eller kjøre til riktig path fra rot-mappe. Dockerfile som ligger i rot-mappe
+generer nå riktig docker-image hvis jeg kjører den manuelt, men får fortsatt
+samme feilmelding fra concourse på build-jobbem "It doesn't appear that given Dockerfile: "jar-file/Dockerfile" is a file"
+
+
+### Google C
  
  
     
