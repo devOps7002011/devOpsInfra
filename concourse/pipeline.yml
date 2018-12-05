@@ -24,7 +24,7 @@ jobs:
       trigger: true
     - get: devOpsInfra
    - task: mvn_build
-     file: devOpsInfra/concourse/terraform/task.yml
+     file: devOpsInfra/concourse/java/task.yml
      input_mapping: {source: devOpsApp}
 
   - put: docker-image-app
