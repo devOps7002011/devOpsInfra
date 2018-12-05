@@ -23,6 +23,10 @@ jobs:
     - get: devOpsApp
       trigger: true
     - get: devOpsInfra
+   - task: mvn_build
+     file: devOpsInfra/concourse/terraform/task.yml
+     input_mapping: {source: devOpsApp}
+
   - put: docker-image-app
     params:
       build: jar-file
@@ -34,6 +38,12 @@ jobs:
     - get: docker-image-app
       trigger: true
       passed: [build]
+   - task: herokutask
+     file: devOpsInfra/concourse/heroku/herokutask.yml
+     params:
+       heroku_email: ((heroku_email))
+       heroku_api_token: ((heroku_api_key))
+       app_name: ((heroku_app_name))
 
 - name: infra
   plan:
