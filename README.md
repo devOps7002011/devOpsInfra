@@ -41,10 +41,12 @@ sudo git update-index --chmod=+x terraform.sh
 
 ###  Docker 
 Dockerfil bygger container Image av applikasjonen
-- Problem i forhold til mappestruktur i applikasjons-repo hvor dockerfile til applikasjon,
+- Hadde problem i forhold til mappestruktur i applikasjons-repo hvor dockerfile til applikasjon,
 ikke ligger i rotmappe, jeg prøvde å søke meg opp på mulige måter å løse dette på,
 enten ved å bygge en task-job i concourse som kjørte docker-compose.yml (ligger i prosjekt-mappe)som igjen bygger dockerfilen 
-tilhørende applikasjonen, eller kjøre til riktig path fra rot-mappe, sistnevnte fungerte 
+tilhørende applikasjonen, eller kjøre til riktig path fra rot-mappe, sistnevnte fungerte for meg. Sjekk din mappestruktur/eventuelt
+endre Dockerfile 
+
 
 
 ### Google C
