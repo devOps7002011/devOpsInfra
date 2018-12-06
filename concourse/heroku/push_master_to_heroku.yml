@@ -12,7 +12,7 @@ inputs:
 params:
   heroku_email:
   heroku_api_token:
-  app_name:
+  app_name: ((heroku_app_name))
 
 run:
   path: sh

@@ -44,9 +44,7 @@ Dockerfil bygger container Image av applikasjonen
 - Problem i forhold til mappestruktur i applikasjons-repo hvor dockerfile til applikasjon,
 ikke ligger i rotmappe, jeg prøvde å søke meg opp på mulige måter å løse dette på,
 enten ved å bygge en task-job i concourse som kjørte docker-compose.yml (ligger i prosjekt-mappe)som igjen bygger dockerfilen 
-tilhørende applikasjonen, eller kjøre til riktig path fra rot-mappe. Dockerfile som ligger i rot-mappe
-generer nå riktig docker-image hvis jeg kjører den manuelt, men får fortsatt
-samme feilmelding fra concourse på build-jobbem "It doesn't appear that given Dockerfile: "jar-file/Dockerfile" is a file"
+tilhørende applikasjonen, eller kjøre til riktig path fra rot-mappe, sistnevnte fungerte 
 
 
 ### Google C
