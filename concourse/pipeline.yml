@@ -2,6 +2,8 @@ jobs:
 # Replace params / app_name with your heroku app name
 
 - name: build
+  public: true
+  serial: true
   plan:
   - aggregate:
     - get: devOpsApp
@@ -13,7 +15,7 @@ jobs:
 
   - put: docker-image-app
     params:
-      build: jar-file
+      build: devOpsApp
 
 
 - name: deploy-ci

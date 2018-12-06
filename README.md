@@ -26,7 +26,7 @@ Prosject er basert på at du har Docker
  
  fly -t ≤target> sp -p pipeline_name -c concourse/pipeline.yml -l credentials.yml
  
- fly -t tutorial unpause-pipeline -p pipeline_name
+ fly -t <target> unpause-pipeline -p pipeline_name
  
  6. Open: localhost:8080 - kjør infra jobb
  
